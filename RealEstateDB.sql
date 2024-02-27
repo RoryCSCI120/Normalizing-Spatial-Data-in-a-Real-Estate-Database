@@ -45,6 +45,7 @@ CREATE TABLE Utilities (
     FOREIGN KEY (AddressID) REFERENCES PropertyAdresses(AddressID)
 );
 --This creates a table for Utilities, featuring UtilityID, a generated variable to represent each utility, alongside a column for names of the differnt utilities in the previous table.
+--This eliminates partial dependency by atomizing the utility values, giving them their own unique IDs.
 
 INSERT INTO Utilities (AddressID, UtilityName) VALUES
 (1, 'parking'), 
@@ -82,7 +83,7 @@ CREATE TABLE CityDemographics (
     Country VARCHAR(50),
     CityPopulation INT
 );
---creates a city demographics table to eliminate partial dependency
+--creates a city demographics table to eliminate transitive dependency
 
 INSERT INTO CityDemographics (City, State, Country, CityPopulation) VALUES
 ('Worcester', 'MA', 'United States of America', '206518'),
@@ -101,7 +102,8 @@ CREATE TABLE PropertyZoning (
     PropertyID INT REFERENCES PropertyDetails(PropertyID),
     ZoningType VARCHAR(100)
 );
---Creates a table called PropertyZoning, containging columsn for a PropertyZoningID, Property ID
+--Creates a table called PropertyZoning, containging columuns for a PropertyZoningID, Property ID
+--This is to get rid of multivalued dependency as some of the properties can have the same zoning type
 
 INSERT INTO PropertyZoning (PropertyID, ZoningType) VALUES
 (1, 'residential'),
